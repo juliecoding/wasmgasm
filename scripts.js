@@ -4,7 +4,7 @@ function colorGen() {
 }
 
 //Loops one million times, creating a 1px x 1px colored square and appending it to the selected div each time.
-for (var i = 0; i < 1000000; i++) {
+for (var i = 0; i < 100; i++) {
   var colorOfChance = `rgb(${colorGen()},${colorGen()},${colorGen()}`
   var trouble = document.createElement('div');
   trouble.setAttribute("style", "height:1px; width:1px;background-color:" + colorOfChance);
