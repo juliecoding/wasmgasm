@@ -9,4 +9,23 @@
     </div>
     <script src="./scripts.js" charset="utf-8"></script>
   </body>
+  <script>
+    //From the very helpful Guy Bedford. He titled it better though.
+    function fetchAndInstantiateYourButtIMeanWasm (url, imports) {
+      return fetch(url)
+      .then(res => {
+        if (res.ok)
+          return res.arrayBuffer();
+        throw new Error(`Unable to fetch Web Assembly file ${url}.`);
+      })
+      .then(bytes => WebAssembly.compile(bytes))
+      .then(module => WebAssembly.instantiate(module, imports || {}))
+      .then(instance => instance.exports);
+    }
+
+    fetchAndInstantiateYourButtIMeanWasm('./random2.wasm')
+    // .then(m => {
+    //   window.getSqrt = m.getSqrt;
+    // });
+  </script>
 </html>
