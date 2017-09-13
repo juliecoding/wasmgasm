@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  background: linear-gradient(#a253ed, #ebd9fc, #ebd9fc, #9ded53) no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Lalezar', sans-serif;
+}
+
+.header {
+  text-align: center;
+  line-height: .25;
+}
+
+.header h1 {
+  font-size: 80px;
+}
+.header h2 {
+  font-size: 30px;
+}
+.header h3 {
+  font-size: 40px;
+}
+.header h4 {
+  font-size: 20px;
+}
+.header h5 {
+  font-size: 10px;
+}
+
+.math {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.math input {
+  font-size: 60px;
+  font-family: "Courier New", Courier, monospace;
+  width: 200px;
+  height: 50px;
+}
+
+.math #result {
+  font-size: 80px;
+}

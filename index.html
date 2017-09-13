@@ -3,29 +3,59 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
+    <link rel="stylesheet" href="./app.css">
   </head>
-  <body>
-    <div id="startedFromTheBottom" style="display:flex;flex-wrap:wrap">
+  <body style="margin: 0; overflow: hidden;">
+    <div class="header">
+      <h3>The Derek Zoolander App</h3>
+      <h5>for</h5>
+      <h2>Kids Who Can't</h2>
+      <h1>Round</h1>
+      <h2>Good</h2>
+      <h4>and Want to Do Other Stuff Good Too</h4>
     </div>
-    <script src="./scripts.js" charset="utf-8"></script>
-  </body>
-  <script>
-    //From the very helpful Guy Bedford. He titled it better though.
-    function fetchAndInstantiateYourButtIMeanWasm (url, imports) {
-      return fetch(url)
-      .then(res => {
-        if (res.ok)
-          return res.arrayBuffer();
-        throw new Error(`Unable to fetch Web Assembly file ${url}.`);
-      })
-      .then(bytes => WebAssembly.compile(bytes))
-      .then(module => WebAssembly.instantiate(module, imports || {}))
-      .then(instance => instance.exports);
-    }
+    <div class="math">
+      <input id="userNumber" name="userNumber" type="input" onblur="displayRounding(userNumber.value)"/>
+      <div id="result"></div>
+    </div>
+    <script>
+      function fetchAndInstantiateWasm (url, imports) {
+        return fetch(url)
+        .then(res => {
+          if (res.ok)
+            return res.arrayBuffer();
+          throw new Error(`Unable to fetch Web Assembly file ${url}.`);
+        })
+        .then(bytes => WebAssembly.compile(bytes))
+        .then(module => WebAssembly.instantiate(module, imports || {}))
+        .then(instance => {
+          return instance.exports;
+        })
+      }
 
-    fetchAndInstantiateYourButtIMeanWasm('./random2.wasm')
-    // .then(m => {
-    //   window.getSqrt = m.getSqrt;
-    // });
-  </script>
+      fetchAndInstantiateWasm('./roundDownRight.wasm')
+      .then(m => {
+        window.roundDown = m.roundDown;
+      });
+
+      fetchAndInstantiateWasm('./roundUpRight.wasm')
+      .then(m => {
+        window.roundUp = m.roundDown;
+      });
+
+      function displayRounding(num) {
+        var result = document.getElementById('result');
+        var userNumber = document.getElementById('userNumber');
+        if (Math.round(num) === Math.floor(num) + 1) {
+          result.innerHTML = window.roundUp(num);
+          userNumber.value = ''
+        }
+        else {
+          result.innerHTML = window.roundDown(num);
+          userNumber.value = ''
+        }
+      }
+    </script>
+  </body>
 </html>
